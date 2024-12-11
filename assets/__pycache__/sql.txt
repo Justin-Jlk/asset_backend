@@ -1,0 +1,37 @@
+import os
+import django
+from django.contrib.auth.hashers import make_password
+
+# Set the environment variable to point to your Django project's settings
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'asset_management.settings')  # Replace 'your_project' with your project name
+
+# Initialize Django
+django.setup()
+
+# Now you can use make_password
+hashed_password = make_password('pass123')
+print(f"Hashed password: {hashed_password}")
+ 
+
+SQL 
+
+UPDATE public.assets_employeeauth
+SET password = 'pbkdf2_sha256$600000$JAf4WlAaMbtITwUVHhNJ0k$03OhVFH+g8pHTGrGjrzwwCrKzXbFwlbn6R7CjYrKmhU='
+WHERE employee_id = 1;
+
+
+
+For DB password Encrypt 
+
+from cryptography.fernet import Fernet
+
+# Use the same key generated earlier
+key = Fernet.generate_key()  # Replace with your actual key
+cipher_suite = Fernet(key)
+
+print(f"Encryption Key: {key.decode()}")
+# Encrypt the database password
+password = "root"  # Replace with your actual database password
+encrypted_password = cipher_suite.encrypt(password.encode())
+
+print(f"Encrypted DB Password: {encrypted_password.decode()}")
